@@ -452,11 +452,11 @@ func (ctx *GCMSIV) Seal(dst, nonce, plaintext, additionalData []byte) []byte {
 		log("Nonce", nonce)
 	}
 
-	if len(plaintext) > maxPlaintextLen {
+	if int64(len(plaintext)) > maxPlaintextLen {
 		panic("gcmsiv: plaintext too large")
 	}
 
-	if len(additionalData) > maxADLen {
+	if int64(len(additionalData)) > maxADLen {
 		panic("gcmsiv: additional data too large")
 	}
 
@@ -472,11 +472,11 @@ func (ctx *GCMSIV) Seal(dst, nonce, plaintext, additionalData []byte) []byte {
 }
 
 func (ctx GCMSIV) Open(dst, nonce, ciphertext, additionalData []byte) (out []byte, err error) {
-	if len(additionalData) > maxADLen {
+	if int64(len(additionalData)) > maxADLen {
 		return nil, errors.New("gcmsiv: bad ciphertext length")
 	}
 
-	if len(ciphertext) < 16 || len(ciphertext) > maxCiphertextLen {
+	if int64(len(ciphertext)) < 16 || int64(len(ciphertext)) > maxCiphertextLen {
 		return nil, errors.New("gcmsiv: bad ciphertext length")
 	}
 
